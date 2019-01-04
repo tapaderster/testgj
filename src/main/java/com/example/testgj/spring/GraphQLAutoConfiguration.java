@@ -15,6 +15,7 @@ import graphql.servlet.GraphQLQueryInvoker;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.servlet.http.HttpServlet;
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class GraphQLAutoConfiguration {
   }
 
   @Bean
-  public ServletRegistrationBean graphQLServletRegistration(HttpServlet graphQLServlet) {
+  public ServletRegistrationBean graphQLServletRegistration(GraphQLHttpServlet graphQLServlet) {
     return new ServletRegistrationBean(graphQLServlet, "/graphql");
   }
 
@@ -84,10 +85,5 @@ public class GraphQLAutoConfiguration {
   @Bean
   public GraphQLHttpServlet graphQLHttpServlet(GraphQLConfiguration graphQLConfiguration) {
     return GraphQLHttpServlet.with(graphQLConfiguration);
-
-//    return SimpleGraphQLHttpServlet.newBuilder(graphQLInvocationInputFactory)
-//        .withQueryInvoker(graphQLQueryInvoker)
-//        .withObjectMapper(graphQLObjectMapper)
-//        .build();
   }
 }
